@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="en" data-theme="light"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>About | KailenHoward</title><meta name="description" content="About KailenHoward, frontend architect focused on performance and product quality."><meta name="author" content="Kailen Howard"><link rel="canonical" href="https://kailen-howard.github.io/about/"><link rel="alternate" type="application/rss+xml" title="KailenHoward RSS" href="/rss.xml"><meta property="og:type" content="website"><meta property="og:title" content="About | KailenHoward"><meta property="og:description" content="About KailenHoward, frontend architect focused on performance and product quality."><meta property="og:url" content="https://kailen-howard.github.io/about/"><meta property="og:image" content="https://kailen-howard.github.io/og-default.svg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="About | KailenHoward"><meta name="twitter:description" content="About KailenHoward, frontend architect focused on performance and product quality."><meta name="twitter:image" content="https://kailen-howard.github.io/og-default.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/_astro/_slug_.Db6dlAKh.css"></head> <body> <div class="site-shell"> <header class="site-header" aria-label="Main"> <div class="layout-container site-header-inner"> <a class="brand" href="/"> <span class="brand-dot" aria-hidden="true"></span> <span>KAILEN HOWARD</span> </a> <div class="site-nav-wrap"> <nav class="site-nav" aria-label="Primary"> <a class="site-nav-link" href="/">Posts</a> <a class="site-nav-link" href="/projects">Projects</a> <a class="site-nav-link active" href="/about">About</a> </nav> <div class="site-nav-tools"> <a class="icon-button" href="/search" aria-label="Search posts"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"> <circle cx="11" cy="11" r="6"></circle> <path d="M20 20 16.35 16.35"></path> </svg> </a> <button type="button" class="icon-button" data-theme-toggle aria-label="Toggle dark mode"> <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"> <path d="M21 12.8A9 9 0 1 1 11.2 3a7.2 7.2 0 0 0 9.8 9.8Z"></path> </svg> <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"> <circle cx="12" cy="12" r="4"></circle> <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path> </svg> </button> </div> </div> </div> </header> <main class="layout-container page-content" id="content">  <section class="about-hero"> <h1 class="page-title">About.</h1> </section> <section class="about-grid"> <article class="about-copy"> <p>
+I am a British tech nerd and a university student currently studying for a Bachelor of Science in Computing
+        and IT.
+</p> <p>
+In my spare time, I build random things and dabble with new AI models.
+</p> </article> <aside> <p class="block-label">Technical Stack</p> <ul class="stack-list"> <li class="stack-item"> <span class="stack-icon" aria-hidden="true">^</span> <div> <p class="stack-name">Astro</p> <p class="stack-detail">Site Framework</p> </div> </li> <li class="stack-item"> <span class="stack-icon" aria-hidden="true">&lt;/&gt;</span> <div> <p class="stack-name">TypeScript</p> <p class="stack-detail">Typed Development</p> </div> </li> <li class="stack-item"> <span class="stack-icon" aria-hidden="true">#</span> <div> <p class="stack-name">MDX</p> <p class="stack-detail">Content Rendering</p> </div> </li> <li class="stack-item"> <span class="stack-icon" aria-hidden="true">*</span> <div> <p class="stack-name">RSS + Sitemap</p> <p class="stack-detail">Content Discovery</p> </div> </li> </ul> <section class="currently-learning"> <p class="block-label">Currently Learning</p> <ul class="stack-list"> <li class="stack-item"> <span class="stack-icon stack-icon-js" aria-hidden="true">JS</span> <div> <p class="stack-name">JavaScript</p> </div> </li> </ul> </section> </aside> </section>  </main> <footer class="layout-container site-footer"> <p>© 2026 KAILEN HOWARD</p> <div class="footer-links"> <a href="/">Posts</a> <a href="/about">About</a> <a href="/rss.xml">RSS</a> </div> </footer> </div> <script>
+      (() => {
+        const root = document.documentElement;
+        const key = 'kh-theme';
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+        const getInitialTheme = () => {
+          const saved = localStorage.getItem(key);
+          if (saved === 'light' || saved === 'dark') return saved;
+          return media.matches ? 'dark' : 'light';
+        };
+
+        const apply = (theme) => {
+          root.dataset.theme = theme;
+          localStorage.setItem(key, theme);
+        };
+
+        apply(getInitialTheme());
+
+        const toggle = document.querySelector('[data-theme-toggle]');
+        toggle?.addEventListener('click', () => {
+          const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+          apply(next);
+        });
+
+        const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+          timeZone: 'Europe/London',
+        });
+
+        const toDate = (value) => {
+          if (!value) return null;
+          const date = new Date(value);
+          return Number.isNaN(date.valueOf()) ? null : date;
+        };
+
+        const formatSince = (date, now) => {
+          const diffMs = Math.max(0, now.valueOf() - date.valueOf());
+          const minutes = Math.floor(diffMs / 60_000);
+
+          if (minutes < 1) return 'just now';
+          if (minutes < 60) return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
+
+          const hours = Math.floor(minutes / 60);
+          if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+
+          const days = Math.floor(hours / 24);
+          return `${days} day${days === 1 ? '' : 's'} ago`;
+        };
+
+        const refreshPostDateMeta = () => {
+          document.querySelectorAll('[data-live-datetime]').forEach((node) => {
+            const date = toDate(node.getAttribute('datetime'));
+            if (!date) return;
+            const parts = dateFormatter.formatToParts(date);
+            const day = parts.find((part) => part.type === 'day')?.value ?? '';
+            const month = parts.find((part) => part.type === 'month')?.value ?? '';
+            const year = parts.find((part) => part.type === 'year')?.value ?? '';
+            const hour = parts.find((part) => part.type === 'hour')?.value ?? '';
+            const minute = parts.find((part) => part.type === 'minute')?.value ?? '';
+            node.textContent = `${day}/${month}/${year} ${hour}:${minute}`;
+          });
+
+          const now = new Date();
+          document.querySelectorAll('[data-live-since]').forEach((node) => {
+            const date = toDate(node.getAttribute('data-live-since'));
+            if (!date) return;
+            node.textContent = formatSince(date, now);
+          });
+        };
+
+        refreshPostDateMeta();
+        window.setInterval(refreshPostDateMeta, 60_000);
+      })();
+    </script> </body> </html>

@@ -1,63 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Kailen Howard - Full Stack Developer Portfolio showcasing innovative web applications and creative solutions." />
-    <meta name="keywords" content="Kailen Howard, Web Developer, Full Stack Developer, React Developer, Portfolio" />
-    <meta name="author" content="Kailen Howard" />
-    
-    <!-- Open Graph / Social Media Meta Tags -->
-    <meta property="og:title" content="Kailen Howard - Full Stack Developer" />
-    <meta property="og:description" content="Portfolio showcasing innovative web applications and creative solutions." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://kailen.dev" />
-    
-    <!-- Theme Color for Browser -->
-    <meta name="theme-color" content="#0a0a0a" />
-    
-    <title>Kailen Howard</title>
-    <script type="module" crossorigin src="/assets/index-BAXsZiPm.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    
-    <!-- Preload Animation -->
-    <style>
-      .preload {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #0a0a0a;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-      }
-      
-      .preload::after {
-        content: '';
-        width: 40px;
-        height: 40px;
-        border: 4px solid #333;
-        border-top-color: #00ff9d;
-        border-radius: 50%;
-        animation: loading 0.75s ease infinite;
-      }
-      
-      @keyframes loading {
-        from { transform: rotate(0turn) }
-        to { transform: rotate(1turn) }
-      }
-    </style>
-    <div class="preload"></div>
-    <script>
-      window.addEventListener('load', () => {
-        document.querySelector('.preload').style.display = 'none';
-      });
-    </script>
-  </body>
-</html>
+<!DOCTYPE html><html lang="en" data-theme="light"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>KailenHoward</title><meta name="description" content="Personal writing on frontend architecture, performance, and product engineering."><meta name="author" content="Kailen Howard"><link rel="canonical" href="https://kailen-howard.github.io/"><link rel="alternate" type="application/rss+xml" title="KailenHoward RSS" href="/rss.xml"><meta property="og:type" content="website"><meta property="og:title" content="KailenHoward"><meta property="og:description" content="Personal writing on frontend architecture, performance, and product engineering."><meta property="og:url" content="https://kailen-howard.github.io/"><meta property="og:image" content="https://kailen-howard.github.io/og-default.svg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="KailenHoward"><meta name="twitter:description" content="Personal writing on frontend architecture, performance, and product engineering."><meta name="twitter:image" content="https://kailen-howard.github.io/og-default.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/_astro/_slug_.Db6dlAKh.css"></head> <body> <div class="site-shell"> <header class="site-header" aria-label="Main"> <div class="layout-container site-header-inner"> <a class="brand" href="/"> <span class="brand-dot" aria-hidden="true"></span> <span>KAILEN HOWARD</span> </a> <div class="site-nav-wrap"> <nav class="site-nav" aria-label="Primary"> <a class="site-nav-link active" href="/">Posts</a> <a class="site-nav-link" href="/projects">Projects</a> <a class="site-nav-link" href="/about">About</a> </nav> <div class="site-nav-tools"> <a class="icon-button" href="/search" aria-label="Search posts"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"> <circle cx="11" cy="11" r="6"></circle> <path d="M20 20 16.35 16.35"></path> </svg> </a> <button type="button" class="icon-button" data-theme-toggle aria-label="Toggle dark mode"> <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"> <path d="M21 12.8A9 9 0 1 1 11.2 3a7.2 7.2 0 0 0 9.8 9.8Z"></path> </svg> <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"> <circle cx="12" cy="12" r="4"></circle> <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path> </svg> </button> </div> </div> </div> </header> <main class="layout-container page-content" id="content">  <section class="hero"> <h1 class="hero-title">
+Hi, I'm Kailen Howard.
+<span class="hero-muted">I like to build things on the web.</span> </h1> <a class="icon-button hero-social-link" href="https://github.com/Kailen-Howard" target="_blank" rel="noopener noreferrer" aria-label="Visit Kailen Howard on GitHub"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path fill="currentColor" d="M12 2A10 10 0 0 0 8.84 21.49c.5.09.68-.21.68-.48v-1.88c-2.78.61-3.37-1.18-3.37-1.18-.46-1.15-1.12-1.46-1.12-1.46-.92-.63.07-.62.07-.62 1.01.08 1.54 1.04 1.54 1.04.9 1.54 2.36 1.09 2.93.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.4 9.4 0 0 1 12 6.8c.85 0 1.71.11 2.52.32 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.83-2.35 4.67-4.59 4.92.36.31.69.93.69 1.89v2.8c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"></path> </svg> </a> </section> <section> <div class="section-heading"> <div> <p class="section-label">Latest Writing</p> <h2 class="section-title">Recent Posts</h2> </div> <a class="section-link" href="/rss.xml">RSS Feed</a> </div> <ul class="post-list" aria-label="Posts"> <li class="post-item"> <div class="post-item-meta"> <time datetime="2026-02-17T20:01:11.000Z" data-live-datetime> 17/02/2026 20:01 </time> <span aria-hidden="true"> · </span> <span data-live-since="2026-02-17T20:01:11.000Z">1 hour ago</span> </div> <div> <a class="post-link" href="/posts/first-post/"> <h3 class="post-link-title">First Post</h3> </a> <p class="post-description">First post on the site.</p> </div> </li> </ul> </section>  </main> <footer class="layout-container site-footer"> <p>© 2026 KAILEN HOWARD</p> <div class="footer-links"> <a href="/">Posts</a> <a href="/about">About</a> <a href="/rss.xml">RSS</a> </div> </footer> </div> <script>
+      (() => {
+        const root = document.documentElement;
+        const key = 'kh-theme';
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+        const getInitialTheme = () => {
+          const saved = localStorage.getItem(key);
+          if (saved === 'light' || saved === 'dark') return saved;
+          return media.matches ? 'dark' : 'light';
+        };
+
+        const apply = (theme) => {
+          root.dataset.theme = theme;
+          localStorage.setItem(key, theme);
+        };
+
+        apply(getInitialTheme());
+
+        const toggle = document.querySelector('[data-theme-toggle]');
+        toggle?.addEventListener('click', () => {
+          const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+          apply(next);
+        });
+
+        const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+          timeZone: 'Europe/London',
+        });
+
+        const toDate = (value) => {
+          if (!value) return null;
+          const date = new Date(value);
+          return Number.isNaN(date.valueOf()) ? null : date;
+        };
+
+        const formatSince = (date, now) => {
+          const diffMs = Math.max(0, now.valueOf() - date.valueOf());
+          const minutes = Math.floor(diffMs / 60_000);
+
+          if (minutes < 1) return 'just now';
+          if (minutes < 60) return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
+
+          const hours = Math.floor(minutes / 60);
+          if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+
+          const days = Math.floor(hours / 24);
+          return `${days} day${days === 1 ? '' : 's'} ago`;
+        };
+
+        const refreshPostDateMeta = () => {
+          document.querySelectorAll('[data-live-datetime]').forEach((node) => {
+            const date = toDate(node.getAttribute('datetime'));
+            if (!date) return;
+            const parts = dateFormatter.formatToParts(date);
+            const day = parts.find((part) => part.type === 'day')?.value ?? '';
+            const month = parts.find((part) => part.type === 'month')?.value ?? '';
+            const year = parts.find((part) => part.type === 'year')?.value ?? '';
+            const hour = parts.find((part) => part.type === 'hour')?.value ?? '';
+            const minute = parts.find((part) => part.type === 'minute')?.value ?? '';
+            node.textContent = `${day}/${month}/${year} ${hour}:${minute}`;
+          });
+
+          const now = new Date();
+          document.querySelectorAll('[data-live-since]').forEach((node) => {
+            const date = toDate(node.getAttribute('data-live-since'));
+            if (!date) return;
+            node.textContent = formatSince(date, now);
+          });
+        };
+
+        refreshPostDateMeta();
+        window.setInterval(refreshPostDateMeta, 60_000);
+      })();
+    </script> </body> </html>
