@@ -25,13 +25,6 @@ npm run build
 npm run preview
 ```
 
-## Deploy to GitHub Pages
-
-1. Push this project to the `main` branch of `kailen-howard.github.io`.
-2. In GitHub repo settings, set Pages source to `Deploy from a branch`.
-3. Select branch `gh-pages` and folder `/ (root)`.
-4. The workflow in `.github/workflows/deploy.yml` will build and publish `dist` to `gh-pages` on each push to `main`.
-
 ## Content
 
 Add posts in `src/content/posts` using Markdown or MDX with frontmatter:
@@ -46,3 +39,4 @@ draft: false
 ogImage: "/og-default.svg"
 ---
 ```
+
