@@ -1,0 +1,197 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  publishedTime?: string;
+  updatedTime?: string;
+}
+
+const {
+  title = 'KailenHoward',
+  description = 'Notes on frontend architecture, performance, and product engineering.',
+  ogType = 'website',
+  ogImage = '/og-default.svg',
+  publishedTime,
+  updatedTime,
+} = Astro.props;
+
+const site = Astro.site ?? Astro.url;
+const canonical = new URL(Astro.url.pathname, site).toString();
+const ogImageUrl = new URL(ogImage, site).toString();
+const currentYear = new Date().getFullYear();
+const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
+
+const postsActive = pathname === '/' || pathname.startsWith('/posts');
+const projectsActive = pathname === '/projects' || pathname.startsWith('/projects/');
+const aboutActive = pathname === '/about' || pathname.startsWith('/about/');
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Kailen Howard" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="KailenHoward RSS" href="/rss.xml" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {updatedTime && <meta property="article:modified_time" content={updatedTime} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header" aria-label="Main">
+        <div class="layout-container site-header-inner">
+          <a class="brand" href="/">
+            <span class="brand-dot" aria-hidden="true"></span>
+            <span>KAILEN HOWARD</span>
+          </a>
+
+          <div class="site-nav-wrap">
+            <nav class="site-nav" aria-label="Primary">
+              <a class:list={["site-nav-link", { active: postsActive }]} href="/">Posts</a>
+              <a class:list={["site-nav-link", { active: projectsActive }]} href="/projects">Projects</a>
+              <a class:list={["site-nav-link", { active: aboutActive }]} href="/about">About</a>
+            </nav>
+
+            <div class="site-nav-tools">
+              <a class="icon-button" href="/search" aria-label="Search posts">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="11" cy="11" r="6"></circle>
+                  <path d="M20 20 16.35 16.35"></path>
+                </svg>
+              </a>
+              <button type="button" class="icon-button" data-theme-toggle aria-label="Toggle dark mode">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M21 12.8A9 9 0 1 1 11.2 3a7.2 7.2 0 0 0 9.8 9.8Z"></path>
+                </svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="layout-container page-content" id="content">
+        <slot />
+      </main>
+
+      <footer class="layout-container site-footer">
+        <p>© {currentYear} KAILEN HOWARD</p>
+        <div class="footer-links">
+          <a href="/">Posts</a>
+          <a href="/about">About</a>
+          <a href="/rss.xml">RSS</a>
+        </div>
+      </footer>
+    </div>
+
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const key = 'kh-theme';
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+        const getInitialTheme = () => {
+          const saved = localStorage.getItem(key);
+          if (saved === 'light' || saved === 'dark') return saved;
+          return media.matches ? 'dark' : 'light';
+        };
+
+        const apply = (theme) => {
+          root.dataset.theme = theme;
+          localStorage.setItem(key, theme);
+        };
+
+        apply(getInitialTheme());
+
+        const toggle = document.querySelector('[data-theme-toggle]');
+        toggle?.addEventListener('click', () => {
+          const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+          apply(next);
+        });
+
+        const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+          timeZone: 'Europe/London',
+        });
+
+        const toDate = (value) => {
+          if (!value) return null;
+          const date = new Date(value);
+          return Number.isNaN(date.valueOf()) ? null : date;
+        };
+
+        const formatSince = (date, now) => {
+          const diffMs = Math.max(0, now.valueOf() - date.valueOf());
+          const minutes = Math.floor(diffMs / 60_000);
+
+          if (minutes < 1) return 'just now';
+          if (minutes < 60) return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
+
+          const hours = Math.floor(minutes / 60);
+          if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+
+          const days = Math.floor(hours / 24);
+          return `${days} day${days === 1 ? '' : 's'} ago`;
+        };
+
+        const refreshPostDateMeta = () => {
+          document.querySelectorAll('[data-live-datetime]').forEach((node) => {
+            const date = toDate(node.getAttribute('datetime'));
+            if (!date) return;
+            const parts = dateFormatter.formatToParts(date);
+            const day = parts.find((part) => part.type === 'day')?.value ?? '';
+            const month = parts.find((part) => part.type === 'month')?.value ?? '';
+            const year = parts.find((part) => part.type === 'year')?.value ?? '';
+            const hour = parts.find((part) => part.type === 'hour')?.value ?? '';
+            const minute = parts.find((part) => part.type === 'minute')?.value ?? '';
+            node.textContent = `${day}/${month}/${year} ${hour}:${minute}`;
+          });
+
+          const now = new Date();
+          document.querySelectorAll('[data-live-since]').forEach((node) => {
+            const date = toDate(node.getAttribute('data-live-since'));
+            if (!date) return;
+            node.textContent = formatSince(date, now);
+          });
+        };
+
+        refreshPostDateMeta();
+        window.setInterval(refreshPostDateMeta, 60_000);
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About | KailenHoward"
+  description="About KailenHoward, frontend architect focused on performance and product quality."
+>
+  <section class="about-hero">
+    <h1 class="page-title">About.</h1>
+  </section>
+
+  <section class="about-grid">
+    <article class="about-copy">
+      <p>
+        I am a British tech nerd and a university student currently studying for a Bachelor of Science in Computing
+        and IT.
+      </p>
+      <p>
+        In my spare time, I build random things and dabble with new AI models.
+      </p>
+    </article>
+
+    <aside>
+      <p class="block-label">Technical Stack</p>
+      <ul class="stack-list">
+        <li class="stack-item">
+          <span class="stack-icon" aria-hidden="true">^</span>
+          <div>
+            <p class="stack-name">Astro</p>
+            <p class="stack-detail">Site Framework</p>
+          </div>
+        </li>
+        <li class="stack-item">
+          <span class="stack-icon" aria-hidden="true">&lt;/&gt;</span>
+          <div>
+            <p class="stack-name">TypeScript</p>
+            <p class="stack-detail">Typed Development</p>
+          </div>
+        </li>
+        <li class="stack-item">
+          <span class="stack-icon" aria-hidden="true">#</span>
+          <div>
+            <p class="stack-name">MDX</p>
+            <p class="stack-detail">Content Rendering</p>
+          </div>
+        </li>
+        <li class="stack-item">
+          <span class="stack-icon" aria-hidden="true">*</span>
+          <div>
+            <p class="stack-name">RSS + Sitemap</p>
+            <p class="stack-detail">Content Discovery</p>
+          </div>
+        </li>
+      </ul>
+
+      <section class="currently-learning">
+        <p class="block-label">Currently Learning</p>
+        <ul class="stack-list">
+          <li class="stack-item">
+            <span class="stack-icon stack-icon-js" aria-hidden="true">JS</span>
+            <div>
+              <p class="stack-name">JavaScript</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </aside>
+  </section>
+</BaseLayout>

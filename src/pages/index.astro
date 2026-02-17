@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDateTime, formatTimeSince } from '../utils/post';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<BaseLayout
+  title="KailenHoward"
+  description="Personal writing on frontend architecture, performance, and product engineering."
+>
+  <section class="hero">
+    <h1 class="hero-title">
+      Hi, I'm Kailen Howard.
+      <span class="hero-muted">I like to build things on the web.</span>
+    </h1>
+    <a
+      class="icon-button hero-social-link"
+      href="https://github.com/Kailen-Howard"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Visit Kailen Howard on GitHub"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M12 2A10 10 0 0 0 8.84 21.49c.5.09.68-.21.68-.48v-1.88c-2.78.61-3.37-1.18-3.37-1.18-.46-1.15-1.12-1.46-1.12-1.46-.92-.63.07-.62.07-.62 1.01.08 1.54 1.04 1.54 1.04.9 1.54 2.36 1.09 2.93.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.4 9.4 0 0 1 12 6.8c.85 0 1.71.11 2.52.32 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.83-2.35 4.67-4.59 4.92.36.31.69.93.69 1.89v2.8c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"
+        ></path>
+      </svg>
+    </a>
+  </section>
+
+  <section>
+    <div class="section-heading">
+      <div>
+        <p class="section-label">Latest Writing</p>
+        <h2 class="section-title">Recent Posts</h2>
+      </div>
+      <a class="section-link" href="/rss.xml">RSS Feed</a>
+    </div>
+
+    {
+      posts.length > 0 ? (
+        <ul class="post-list" aria-label="Posts">
+          {posts.map((post) => (
+            <li class="post-item">
+              <div class="post-item-meta">
+                <time datetime={post.data.pubDate.toISOString()} data-live-datetime>
+                  {formatDateTime(post.data.pubDate)}
+                </time>
+                <span aria-hidden="true"> · </span>
+                <span data-live-since={post.data.pubDate.toISOString()}>{formatTimeSince(post.data.pubDate)}</span>
+              </div>
+              <div>
+                <a class="post-link" href={`/posts/${post.slug}/`}>
+                  <h3 class="post-link-title">{post.data.title}</h3>
+                </a>
+                <p class="post-description">{post.data.description}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="empty-state">
+          <p>No published posts yet.</p>
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

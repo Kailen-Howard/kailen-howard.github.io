@@ -1,0 +1,184 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDateTime, formatTimeSince } from '../utils/post';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const toSearchText = (value: string) => value.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+const searchablePosts = posts.map((post) => ({
+  post,
+  searchText: toSearchText([post.data.title, post.data.description, post.slug.replace(/-/g, ' '), ...post.data.tags].join(' ')),
+}));
+---
+
+<BaseLayout
+  title="Search | KailenHoward"
+  description="Search posts by title, description, and tags."
+>
+  <section class="about-hero">
+    <p class="section-label">Explore</p>
+    <h1 class="page-title">Search Posts.</h1>
+    <p class="page-intro">Search by title, description, slug, or tag.</p>
+  </section>
+
+  <section>
+    {
+      posts.length > 0 ? (
+        <>
+          <form class="search-panel" role="search" aria-label="Search posts" data-post-search-form>
+            <label class="search-label" for="post-search">Search query</label>
+            <div class="search-input-row">
+              <input
+                class="search-input"
+                id="post-search"
+                type="search"
+                name="q"
+                autocomplete="off"
+                placeholder="Type to filter posts..."
+                data-post-search-input
+              />
+              <button class="search-clear" type="button" data-post-search-clear hidden>Clear</button>
+            </div>
+            <p class="search-status" data-post-search-status aria-live="polite">
+              Type at least 2 characters to search posts.
+            </p>
+          </form>
+
+          <div class="empty-state" data-post-search-idle>
+            <p>Type at least 2 characters to start searching posts.</p>
+          </div>
+
+          <ul class="post-list" aria-label="Search results" data-post-search-list hidden>
+            {searchablePosts.map(({ post, searchText }) => (
+              <li class="post-item" data-post-search-item data-search-text={searchText}>
+                <div class="post-item-meta">
+                  <time datetime={post.data.pubDate.toISOString()} data-live-datetime>
+                    {formatDateTime(post.data.pubDate)}
+                  </time>
+                  <span aria-hidden="true"> · </span>
+                  <span data-live-since={post.data.pubDate.toISOString()}>{formatTimeSince(post.data.pubDate)}</span>
+                </div>
+                <div>
+                  <a class="post-link" href={`/posts/${post.slug}/`}>
+                    <h3 class="post-link-title">{post.data.title}</h3>
+                  </a>
+                  <p class="post-description">{post.data.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <div class="empty-state" data-post-search-empty hidden>
+            <p>No posts match your search.</p>
+          </div>
+        </>
+      ) : (
+        <div class="empty-state">
+          <p>No published posts yet.</p>
+        </div>
+      )
+    }
+  </section>
+
+  <script is:inline>
+    (() => {
+      const form = document.querySelector('[data-post-search-form]');
+      const input = document.querySelector('[data-post-search-input]');
+      const clear = document.querySelector('[data-post-search-clear]');
+      const status = document.querySelector('[data-post-search-status]');
+      const list = document.querySelector('[data-post-search-list]');
+      const idle = document.querySelector('[data-post-search-idle]');
+      const empty = document.querySelector('[data-post-search-empty]');
+      const items = Array.from(document.querySelectorAll('[data-post-search-item]'));
+
+      if (!form || !input || !clear || !status || !list || !idle || !empty || items.length === 0) return;
+
+      const toQueryValue = (value) => value.trim();
+      const normalize = (value) =>
+        toQueryValue(value)
+          .toLowerCase()
+          .replace(/[^a-z0-9\s]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      const pluralize = (count) => (count === 1 ? '' : 's');
+      const minQueryLength = 2;
+
+      const updateUrl = (query) => {
+        const url = new URL(window.location.href);
+        if (query) {
+          url.searchParams.set('q', query);
+        } else {
+          url.searchParams.delete('q');
+        }
+        const nextSearch = url.searchParams.toString();
+        const nextUrl = nextSearch ? `${url.pathname}?${nextSearch}${url.hash}` : `${url.pathname}${url.hash}`;
+        window.history.replaceState({}, '', nextUrl);
+      };
+
+      const applySearch = (rawValue, { syncUrl } = { syncUrl: true }) => {
+        const query = normalize(rawValue);
+        const queryText = toQueryValue(rawValue);
+        const isIdle = query.length < minQueryLength;
+
+        if (isIdle) {
+          list.hidden = true;
+          idle.hidden = false;
+          empty.hidden = true;
+          clear.hidden = true;
+          status.textContent =
+            query.length === 0
+              ? 'Type at least 2 characters to search posts.'
+              : `Type at least ${minQueryLength} characters to search posts.`;
+          items.forEach((item) => {
+            item.hidden = true;
+          });
+          if (syncUrl) updateUrl('');
+          return;
+        }
+
+        list.hidden = false;
+        idle.hidden = true;
+        const queryTerms = query.split(' ').filter(Boolean);
+
+        let matches = 0;
+        items.forEach((item) => {
+          const haystack = item.getAttribute('data-search-text') ?? '';
+          const isMatch = queryTerms.every((term) => haystack.includes(term));
+          item.hidden = !isMatch;
+          if (isMatch) matches += 1;
+        });
+
+        status.textContent = `${matches} result${pluralize(matches)} for "${queryText}".`;
+
+        clear.hidden = false;
+        empty.hidden = matches !== 0;
+        if (syncUrl) updateUrl(queryText);
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      const initialQuery = params.get('q') ?? '';
+      const normalizedInitialQuery = toQueryValue(initialQuery);
+      input.value = normalizedInitialQuery;
+      applySearch(normalizedInitialQuery, { syncUrl: false });
+
+      if (params.has('q') && normalizedInitialQuery !== initialQuery) {
+        updateUrl(normalizedInitialQuery);
+      }
+
+      input.focus();
+      if (normalizedInitialQuery) {
+        input.select();
+      }
+
+      input.addEventListener('input', () => applySearch(input.value));
+      clear.addEventListener('click', () => {
+        input.value = '';
+        applySearch('');
+        input.focus();
+      });
+      form.addEventListener('submit', (event) => event.preventDefault());
+    })();
+  </script>
+</BaseLayout>
