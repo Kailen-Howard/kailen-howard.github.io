@@ -8,7 +8,7 @@ export async function GET(context) {
 
   return rss({
     title: 'KailenHoward',
-    description: 'Notes on frontend architecture, performance, and product engineering.',
+    description: 'Thoughts from Kailen Howard, a British computing student who builds for the web and experiments with AI.',
     site: context.site,
     customData: '<language>en-us</language>',
     items: posts.map((post) => ({
